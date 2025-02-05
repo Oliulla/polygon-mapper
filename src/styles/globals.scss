@@ -3,8 +3,31 @@ body {
   font-family: Arial, sans-serif;
 }
 
-main {
+.container {
   display: flex;
-  flex-direction: column;
+}
+
+.sidebar {
+  width: 250px;
+  background: #f8f8f8;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.polygon__item {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.btn_danger {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
 }
