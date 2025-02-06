@@ -11,8 +11,10 @@ import {
 } from "@/lib/polygonSlice";
 import { v4 as uuidv4 } from "uuid";
 import { RootState } from "@/lib/store";
+import ColorPicker from "./ColorPicker";
 
 const Map = () => {
+  const [color, setColor] = useState("#ff0000");
   const dispatch = useDispatch();
   const [currentPolygon, setCurrentPolygon] = useState<[number, number][]>([]);
   const selectedPolygon = useSelector(
@@ -32,7 +34,7 @@ const Map = () => {
           updatePolygon({
             id: selectedPolygon.id,
             coordinates: currentPolygon,
-            color: "#ff0000",
+            color: color,
           })
         );
         dispatch(
@@ -47,12 +49,16 @@ const Map = () => {
           addPolygon({
             id: uuidv4(),
             coordinates: currentPolygon,
-            color: "#ff0000",
+            color: color,
           })
         );
       }
       setCurrentPolygon([]);
     }
+  };
+
+  const handleColorChange = (newColor: string) => {
+    setColor(newColor);
   };
 
   return (
@@ -66,21 +72,23 @@ const Map = () => {
           dispatch={dispatch}
         />
         {currentPolygon.length > 0 && (
-          <Polygon
-            positions={currentPolygon}
-            pathOptions={{ color: "#0000ff" }}
-          />
+          <Polygon positions={currentPolygon} pathOptions={{ color: color }} />
         )}
       </MapContainer>
-      <button
-        onClick={handleSavePolygon}
-        disabled={currentPolygon.length === 0}
-        className={`${
-          currentPolygon.length === 0 ? "btn__disabled" : "btn__success"
-        }`}
-      >
-        Save Polygon
-      </button>
+      <div className="w__full flex justify__between">
+        <button
+          onClick={handleSavePolygon}
+          disabled={currentPolygon.length === 0}
+          className={`h__10 ${
+            currentPolygon.length === 0 ? "btn__disabled" : "btn__success"
+          }`}
+        >
+          Save Polygon
+        </button>
+        <div>
+          <ColorPicker initialColor={color} onColorChange={handleColorChange} />
+        </div>
+      </div>
     </div>
   );
 };

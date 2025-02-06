@@ -27,7 +27,7 @@ const Sidebar = () => {
         {polygons.map((polygon, idx) => {
           return (
             <div key={polygon.id} className="polygon__item">
-              <p>Map {idx + 1}</p>
+              <p className="font__semibold">Map-{idx + 1}</p>
               <div>
                 <button
                   onClick={() => dispatch(removePolygon(polygon.id))}

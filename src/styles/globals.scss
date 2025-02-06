@@ -5,6 +5,7 @@
   --border-color: #ddd;
   --text-color: #000;
   --disabled-color: #857e7e;
+  --white-color: #ffffff;
 }
 
 body {
@@ -36,7 +37,7 @@ body {
 
 .btn__danger {
   background: var(--primary-color);
-  color: var(--secondary-color);
+  color: var(--white-color);
   border: none;
   padding: 5px;
   cursor: pointer;
@@ -44,16 +45,19 @@ body {
 
 .btn__success {
   background: var(--success-color);
-  color: var(--secondary-color);
+  color: var(--white-color);
   border: none;
-  padding: 5px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
 .btn__disabled {
   background: var(--disabled-color);
+  padding: 5px 10px;
+  color: var(--white-color);
 }
 
+// Utility classes
 .ml__1 {
   margin-left: 4px;
 }
@@ -64,4 +68,28 @@ body {
 
 .w__full {
   width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify__between {
+  justify-content: space-between;
+}
+
+.items__center {
+  align-items: center; 
+}
+
+.h__10 {
+height: 40px;
+}
+
+.font__semibold {
+  font-weight: 700;
+}
+
+.text__xl {
+   font-size: 24px;
 }
