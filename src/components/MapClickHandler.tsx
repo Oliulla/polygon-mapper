@@ -2,8 +2,8 @@
 
 import { useMapEvents } from "react-leaflet";
 import { Dispatch, SetStateAction } from "react";
-import { addPolygon } from "@/lib/store";
 import { v4 as uuidv4 } from "uuid";
+import { addPolygon } from "@/lib/polygonSlice";
 
 const MapClickHandler = ({
   currentPolygon,

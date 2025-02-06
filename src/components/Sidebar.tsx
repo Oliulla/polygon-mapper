@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, removePolygon } from "@/lib/store";
-import { MapContainer, TileLayer, Polygon, useMap } from "react-leaflet";
-import { calculateCentroid } from "@/utils/calculateCentroid";
+import { RootState } from "@/lib/store";
+import { removePolygon } from "@/lib/polygonSlice";
 
 const Sidebar = () => {
   const polygons = useSelector((state: RootState) => state.polygon.polygons);
@@ -15,29 +14,21 @@ const Sidebar = () => {
       <h2>Saved Polygons</h2>
       {polygons.length === 0 ? <p>No polygons added.</p> : null}
       <div>
-        {polygons.map((polygon) => {
-          const center = calculateCentroid(polygon.coordinates);
-
+        {polygons.map((polygon, idx) => {
           return (
             <div key={polygon.id} className="polygon__item">
-              <MapContainer
-                style={{ width: "100%", height: "200px", borderRadius: "5px" }}
-              >
-                <MapView center={center} />
-
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Polygon
-                  positions={polygon.coordinates}
-                  pathOptions={{ color: polygon.color }}
-                />
-              </MapContainer>
-
-              <button
-                onClick={() => dispatch(removePolygon(polygon.id))}
-                className="btn__danger ml__1"
-              >
-                Delete
-              </button>
+              <p>Map {idx + 1}</p>
+              <div>
+                <button
+                  onClick={() => dispatch(removePolygon(polygon.id))}
+                  className="btn__danger w__full ml__1"
+                >
+                  Delete
+                </button>
+                <button className="btn__success w__full ml__1 mt__1">
+                  Edit
+                </button>
+              </div>
             </div>
           );
         })}
@@ -47,12 +38,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-const MapView = ({ center }: { center: [number, number] }) => {
-  const map = useMap();
-  useEffect(() => {
-    map.setView(center, 13.8);
-  }, [map, center]);
-
-  return null;
-};

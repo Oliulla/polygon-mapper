@@ -1,6 +1,15 @@
+:root {
+  --primary-color: #ff0000;
+  --secondary-color: #f8f8f8;
+  --success-color: #1106aa;
+  --border-color: #ddd;
+  --text-color: #000;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  color: var(--text-color);
 }
 
 .container {
@@ -9,9 +18,9 @@ body {
 
 .sidebar {
   width: 450px;
-  background: #f8f8f8;
+  background: var(--secondary-color);
   padding: 10px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--border-color);
   height: 100vh;
   overflow-y: auto;
 }
@@ -21,12 +30,20 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .btn__danger {
-  background: red;
-  color: white;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.btn__success {
+  background: var(--success-color);
+  color: var(--secondary-color);
   border: none;
   padding: 5px;
   cursor: pointer;
@@ -34,4 +51,12 @@ body {
 
 .ml__1 {
   margin-left: 4px;
+}
+
+.mt__1 {
+  margin-top: 4px;
+}
+
+.w__full {
+  width: 100%;
 }
