@@ -4,6 +4,7 @@
   --success-color: #1106aa;
   --border-color: #ddd;
   --text-color: #000;
+  --disabled-color: #857e7e;
 }
 
 body {
@@ -47,6 +48,10 @@ body {
   border: none;
   padding: 5px;
   cursor: pointer;
+}
+
+.btn__disabled {
+  background: var(--disabled-color);
 }
 
 .ml__1 {
