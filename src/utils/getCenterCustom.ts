@@ -1,4 +1,4 @@
-export const calculateCentroid = (
+export const getCenterCustom = (
   coordinates: [number, number][]
 ): [number, number] => {
   if (coordinates.length === 0) return [0, 0];

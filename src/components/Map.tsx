@@ -1,6 +1,13 @@
 "use client";
 
-import { MapContainer, TileLayer, Polygon, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Polygon,
+  Marker,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MapClickHandler from "./MapClickHandler";
@@ -12,11 +19,19 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { RootState } from "@/lib/store";
 import ColorPicker from "./ColorPicker";
+import { getCenter } from "@/utils/getCenter";
+import { calculateArea } from "@/utils/calculaterAreaWithTurf";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
 const Map = () => {
   const [color, setColor] = useState("#ff0000");
   const dispatch = useDispatch();
   const [currentPolygon, setCurrentPolygon] = useState<[number, number][]>([]);
+  const [polygonArea, setPolygonArea] = useState<number | null>(null);
+  const [polygonCenter, setPolygonCenter] = useState<[number, number] | null>(
+    null
+  );
   const selectedPolygon = useSelector(
     (state: RootState) => state.polygon.selectedPolygon
   );
@@ -26,6 +41,16 @@ const Map = () => {
       setCurrentPolygon(selectedPolygon.coordinates);
     }
   }, [selectedPolygon]);
+
+  useEffect(() => {
+    if (currentPolygon.length > 2) {
+      const areaSqMeters = calculateArea(currentPolygon, "sqm");
+      const center = getCenter(currentPolygon);
+
+      setPolygonArea(areaSqMeters);
+      setPolygonCenter(center);
+    }
+  }, [currentPolygon]);
 
   const handleSavePolygon = () => {
     if (currentPolygon.length > 0) {
@@ -37,13 +62,7 @@ const Map = () => {
             color: color,
           })
         );
-        dispatch(
-          setSelectedPolygon({
-            id: "",
-            coordinates: [],
-            color: "",
-          })
-        );
+        dispatch(setSelectedPolygon({ id: "", coordinates: [], color: "" }));
       } else {
         dispatch(
           addPolygon({
@@ -54,6 +73,8 @@ const Map = () => {
         );
       }
       setCurrentPolygon([]);
+      setPolygonArea(null);
+      setPolygonCenter(null);
     }
   };
 
@@ -74,8 +95,13 @@ const Map = () => {
         {currentPolygon.length > 0 && (
           <Polygon positions={currentPolygon} pathOptions={{ color: color }} />
         )}
+        {polygonCenter && polygonArea !== null && (
+          <Marker position={polygonCenter}>
+            <Tooltip>{polygonArea.toFixed(2)} m^2</Tooltip>
+          </Marker>
+        )}
       </MapContainer>
-      <div className="w__full flex justify__between">
+      <div className="w__full flex justify__between mt-4">
         <button
           onClick={handleSavePolygon}
           disabled={currentPolygon.length === 0}
@@ -85,9 +111,16 @@ const Map = () => {
         >
           Save Polygon
         </button>
-        <div>
-          <ColorPicker initialColor={color} onColorChange={handleColorChange} />
-        </div>
+        {polygonArea !== null && (
+          <div className="mt__2">
+            <p>
+              Polygon Area: {polygonArea.toFixed(2)} m^2 |{" "}
+              {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}
+              {(polygonArea * 0.000247105).toFixed(2)} acres
+            </p>
+          </div>
+        )}
+        <ColorPicker initialColor={color} onColorChange={handleColorChange} />
       </div>
     </div>
   );
