@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Polygon {
+export interface Polygon {
   id: string;
   coordinates: [number, number][];
   color: string;
@@ -8,9 +8,13 @@ interface Polygon {
 
 interface PolygonState {
   polygons: Polygon[];
+  selectedPolygon: Polygon | null;
 }
 
-const initialState: PolygonState = { polygons: [] };
+const initialState: PolygonState = {
+  polygons: [],
+  selectedPolygon: null,
+};
 
 const polygonSlice = createSlice({
   name: "polygon",
@@ -38,9 +42,12 @@ const polygonSlice = createSlice({
         }
       }
     },
+    setSelectedPolygon: (state, action: PayloadAction<Polygon | null>) => {
+      state.selectedPolygon = action.payload;
+    },
   },
 });
 
-export const { addPolygon, removePolygon, updatePolygon } =
+export const { addPolygon, removePolygon, updatePolygon, setSelectedPolygon } =
   polygonSlice.actions;
 export default polygonSlice.reducer;

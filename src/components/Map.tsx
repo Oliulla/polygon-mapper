@@ -1,25 +1,56 @@
 "use client";
 
 import { MapContainer, TileLayer, Polygon, useMap } from "react-leaflet";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import MapClickHandler from "./MapClickHandler";
-import { addPolygon } from "@/lib/polygonSlice";
+import {
+  addPolygon,
+  setSelectedPolygon,
+  updatePolygon,
+} from "@/lib/polygonSlice";
 import { v4 as uuidv4 } from "uuid";
+import { RootState } from "@/lib/store";
 
 const Map = () => {
   const dispatch = useDispatch();
   const [currentPolygon, setCurrentPolygon] = useState<[number, number][]>([]);
+  const selectedPolygon = useSelector(
+    (state: RootState) => state.polygon.selectedPolygon
+  );
+
+  useEffect(() => {
+    if (selectedPolygon) {
+      setCurrentPolygon(selectedPolygon.coordinates);
+    }
+  }, [selectedPolygon]);
 
   const handleSavePolygon = () => {
     if (currentPolygon.length > 0) {
-      dispatch(
-        addPolygon({
-          id: uuidv4(),
-          coordinates: currentPolygon,
-          color: "#ff0000",
-        })
-      );
+      if (selectedPolygon?.id) {
+        dispatch(
+          updatePolygon({
+            id: selectedPolygon.id,
+            coordinates: currentPolygon,
+            color: "#ff0000",
+          })
+        );
+        dispatch(
+          setSelectedPolygon({
+            id: "",
+            coordinates: [],
+            color: "",
+          })
+        );
+      } else {
+        dispatch(
+          addPolygon({
+            id: uuidv4(),
+            coordinates: currentPolygon,
+            color: "#ff0000",
+          })
+        );
+      }
       setCurrentPolygon([]);
     }
   };

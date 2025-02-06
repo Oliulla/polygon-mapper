@@ -3,11 +3,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/lib/store";
-import { removePolygon } from "@/lib/polygonSlice";
+import { Polygon, removePolygon, setSelectedPolygon } from "@/lib/polygonSlice";
 
 const Sidebar = () => {
   const polygons = useSelector((state: RootState) => state.polygon.polygons);
   const dispatch = useDispatch();
+
+  const handleEditPolygon = (polygon: Polygon) => {
+    dispatch(
+      setSelectedPolygon({
+        id: polygon.id,
+        coordinates: polygon.coordinates,
+        color: polygon.color,
+      })
+    );
+  };
 
   return (
     <div className="sidebar">
@@ -25,7 +35,10 @@ const Sidebar = () => {
                 >
                   Delete
                 </button>
-                <button className="btn__success w__full ml__1 mt__1">
+                <button
+                  onClick={() => handleEditPolygon(polygon)}
+                  className="btn__success w__full ml__1 mt__1"
+                >
                   Edit
                 </button>
               </div>
