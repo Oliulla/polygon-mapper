@@ -23,6 +23,7 @@ import { getCenter } from "@/utils/getCenter";
 import { calculateArea } from "@/utils/calculaterAreaWithTurf";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { isPolygonValid } from "@/utils/validatePolygon";
 
 const Map = () => {
   const [color, setColor] = useState<string>("#ff0000");
@@ -56,6 +57,23 @@ const Map = () => {
 
   const handleSavePolygon = () => {
     if (currentPolygon.length > 0) {
+      let removeSelectedPol = polygons;
+      if (selectedPolygon?.id) {
+        removeSelectedPol = polygons?.filter(
+          (pol) => pol.id !== selectedPolygon?.id
+        );
+      }
+
+      if (currentPolygon.length < 4) {
+        alert("Error: A polygon must have at least 4 points!");
+        return;
+      }
+      // console.log(isPolygonValid(currentPolygon, polygons));
+      if (!isPolygonValid(currentPolygon, removeSelectedPol)) {
+        alert("Error: The new polygon overlaps with an existing polygon!");
+        return;
+      }
+
       if (selectedPolygon?.id) {
         dispatch(
           updatePolygon({
