@@ -40,7 +40,10 @@ const ExportAndImport = () => {
         Export JSON
       </button>
 
-      <label htmlFor="file-upload" className="btn__secondary cursor__pointer">
+      <label
+        htmlFor="file-upload"
+        className="btn__secondary cursor__pointer"
+      >
         Import JSON
       </label>
       <input

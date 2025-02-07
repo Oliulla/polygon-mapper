@@ -12,6 +12,12 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: var(--text-color);
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4,h5,h6,p{
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -19,7 +25,7 @@ body {
 }
 
 .sidebar {
-  width: 100%;
+  width: 40%;
   background: var(--secondary-color);
   padding: 10px;
   border-right: 1px solid var(--border-color);
@@ -27,8 +33,12 @@ body {
   overflow-y: auto;
 }
 
+.map__section {
+  width: 60%;
+}
+
 .map__container {
-  height: 50vh;
+  height: 45vh;
   width: 100%;
 }
 
@@ -48,10 +58,17 @@ body {
 // Polygon Item
 .polygon__item {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
   border-bottom: 1px solid var(--border-color);
+}
+
+.save__btn {
+  height: auto;
+  width: 70%;
+  margin-bottom: 4px;
 }
 
 // Buttons
@@ -59,17 +76,21 @@ body {
   background: var(--success-color);
   color: var(--white-color);
   border: none;
-  padding: 5px 4px;
+  padding: 10px 8px;
   cursor: pointer;
 }
 
 .btn__secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--secondary-color);
   color: var(--white-color);
   border: none;
-  padding: 5px 4px;
+  padding: 5px 10px;
   cursor: pointer;
 }
+
 
 .btn__danger {
   background: var(--primary-color);
@@ -90,7 +111,11 @@ body {
 .btn__disabled {
   background: var(--disabled-color);
   border: none;
-  padding: 2px 4px;
+  padding: 10px 8px;
+}
+
+.btn__area {
+  margin-top: 8px;
 }
 
 // Utility Classes
@@ -128,6 +153,14 @@ body {
 
 .flex__col {
   flex-direction: column;
+}
+
+.sm__flex__col {
+  flex-direction: column;
+}
+
+.sm__w__full {
+  width: 100%;
 }
 
 .justify__center {
@@ -170,12 +203,16 @@ body {
   font-weight: 700;
 }
 
-.text__xl {
-  font-size: 24px;
+.md__text__xl {
+  font-size: 18px;
 }
 
 .text__white {
   color: var(--white-color);
+}
+
+.text__center {
+  text-align: center;
 }
 
 .cursor__not__allowed {
@@ -198,11 +235,20 @@ body {
 
 @media (min-width: 768px) {
   .sidebar {
-    width: 450px;
+    width: 30%;
+  }
+
+  .map__section {
+    width: 70%;
   }
 
   .map__container {
-    height: 60vh;
+    height: 55vh;
+  }
+
+  .save__btn {
+    height: 32px;
+    width: 80px;
   }
 
   .visible__xs__hidden__lg {
@@ -211,5 +257,21 @@ body {
 
   .hidden__xs__visible__lg{
     display: block;
+  }
+
+  .sm__flex__col {
+    flex-direction: row;
+  }
+
+  .md__text__xl {
+    font-size: 24px;
+  }
+
+  .polygon__item {
+    flex-direction: row;
+  }
+  
+  .btn__area {
+    margin-top: 0;
   }
 }
