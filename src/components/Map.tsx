@@ -25,7 +25,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
 const Map = () => {
-  const [color, setColor] = useState("#ff0000");
+  const [color, setColor] = useState<string>("#ff0000");
   const dispatch = useDispatch();
   const [currentPolygon, setCurrentPolygon] = useState<[number, number][]>([]);
   const [polygonArea, setPolygonArea] = useState<number | null>(null);
@@ -39,6 +39,7 @@ const Map = () => {
   useEffect(() => {
     if (selectedPolygon) {
       setCurrentPolygon(selectedPolygon.coordinates);
+      setColor(selectedPolygon?.color);
     }
   }, [selectedPolygon]);
 
