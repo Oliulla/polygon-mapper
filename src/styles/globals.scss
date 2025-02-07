@@ -54,7 +54,7 @@ body {
   background: var(--success-color);
   color: var(--white-color);
   border: none;
-  padding: 5px 10px;
+  padding: 5px 4px;
   cursor: pointer;
 }
 
@@ -77,7 +77,7 @@ body {
 .btn__disabled {
   background: var(--disabled-color);
   border: none;
-  padding: 5px 10px;
+  padding: 2px 4px;
 }
 
 // Utility Classes
@@ -117,8 +117,8 @@ body {
   gap: 4px;
 }
 
-.h__10 {
-  height: 40px;
+.h__8 {
+  height: 32px;
 }
 
 .w__20 {

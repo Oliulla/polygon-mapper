@@ -111,7 +111,7 @@ const Map = () => {
         <button
           onClick={handleSavePolygon}
           disabled={currentPolygon.length === 0}
-          className={`h__10 w__20 ${
+          className={`h__8 w__20 ${
             currentPolygon.length === 0
               ? "btn__disabled cursor__not__allowed"
               : "btn__primary"
