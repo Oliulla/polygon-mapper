@@ -2,7 +2,6 @@
 
 import { useMapEvents } from "react-leaflet";
 import { Dispatch, SetStateAction } from "react";
-import booleanIntersects from "@turf/boolean-intersects";
 import * as turf from "@turf/turf";
 
 const MapClickHandler = ({
@@ -30,28 +29,21 @@ const MapClickHandler = ({
       // Create a temporary polygon with the new point
       const tempPolygon = [...currentPolygon, newPoint];
 
-      // Ensure at least 4 points are present to form a valid polygon
-      if (tempPolygon.length >= 4) {
-        const line = turf.lineString(
-          tempPolygon.map(([lat, lng]) => [lng, lat])
-        );
+      // Only start checking for intersection after we have at least 3 points
+      if (tempPolygon.length >= 3) {
+        // Close the polygon by repeating the first point at the end
+        const polygonCoords = tempPolygon.map(([lat, lng]) => [lng, lat]);
+        polygonCoords.push(polygonCoords[0]); // Close the polygon
 
-        // Check for intersection with all the previous segments
-        for (let i = 0; i < tempPolygon.length - 1; i++) {
-          const prevSegment = turf.lineString([
-            [tempPolygon[i][1], tempPolygon[i][0]],
-            [tempPolygon[i + 1][1], tempPolygon[i + 1][0]],
-          ]);
-          const newSegment = turf.lineString([
-            [tempPolygon[i + 1][1], tempPolygon[i + 1][0]],
-            [newPoint[1], newPoint[0]],
-          ]);
+        // Create the polygon object
+        const polygon = turf.polygon([polygonCoords]);
 
-          // Check if any segment intersects
-          if (booleanIntersects(prevSegment, newSegment)) {
-            alert("Error: The polygon intersects itself!");
-            return;
-          }
+        // Check for self-intersections by comparing with the line formed by the points
+        const line = turf.lineString(polygonCoords);
+
+        if (!turf.booleanDisjoint(polygon, line)) {
+          alert("Error: The polygon intersects itself!");
+          return;
         }
       }
 
