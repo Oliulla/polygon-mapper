@@ -6,7 +6,6 @@ import {
   Polygon,
   Marker,
   Tooltip,
-  useMap,
 } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
@@ -25,6 +24,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { isPolygonValid } from "@/utils/validatePolygon";
 import ExportAndImport from "./ExportAndImport";
+import MapView from "./MapView";
 
 const Map = () => {
   const [color, setColor] = useState<string>("#ff0000");
@@ -156,11 +156,11 @@ const Map = () => {
 
 export default Map;
 
-const MapView = () => {
-  const map = useMap();
-  useEffect(() => {
-    map.setView([51.505, -0.09], 13);
-  }, [map]);
+// const MapView = () => {
+//   const map = useMap();
+//   useEffect(() => {
+//     map.setView([51.505, -0.09], 13);
+//   }, [map]);
 
-  return null;
-};
+//   return null;
+// };
