@@ -27,12 +27,35 @@ body {
   overflow-y: auto;
 }
 
+// Search Input
+.search__input {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  outline: none;
+}
+
+// Polygon List
+.polygon__list {
+  margin-top: 10px;
+}
+
+// Polygon Item
 .polygon__item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
   border-bottom: 1px solid var(--border-color);
+}
+
+// Buttons
+.btn__primary {
+  background: var(--success-color);
+  color: var(--white-color);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .btn__danger {
@@ -53,11 +76,11 @@ body {
 
 .btn__disabled {
   background: var(--disabled-color);
+  border: none;
   padding: 5px 10px;
-  color: var(--white-color);
 }
 
-// Utility classes
+// Utility Classes
 .ml__1 {
   margin-left: 4px;
 }
@@ -68,6 +91,10 @@ body {
 
 .mt__2 {
   margin-top: 8px;
+}
+
+.mr__5 {
+  margin-right: 20px;
 }
 
 .w__full {
@@ -83,15 +110,19 @@ body {
 }
 
 .items__center {
-  align-items: center; 
+  align-items: center;
 }
 
-.gap__x {
-  gap: 20px;
+.gap__x_1 {
+  gap: 4px;
 }
 
 .h__10 {
-height: 40px;
+  height: 40px;
+}
+
+.w__20 {
+  width: 80px;
 }
 
 .font__semibold {
@@ -99,5 +130,9 @@ height: 40px;
 }
 
 .text__xl {
-   font-size: 24px;
+  font-size: 24px;
+}
+
+.cursor__not__allowed {
+  cursor: not-allowed;
 }

@@ -35,6 +35,7 @@ const Map = () => {
   const selectedPolygon = useSelector(
     (state: RootState) => state.polygon.selectedPolygon
   );
+  const polygons = useSelector((state: RootState) => state.polygon.polygons);
 
   useEffect(() => {
     if (selectedPolygon) {
@@ -59,15 +60,19 @@ const Map = () => {
         dispatch(
           updatePolygon({
             id: selectedPolygon.id,
+            label: selectedPolygon.label,
             coordinates: currentPolygon,
             color: color,
           })
         );
-        dispatch(setSelectedPolygon({ id: "", coordinates: [], color: "" }));
+        dispatch(
+          setSelectedPolygon({ id: "", label: "", coordinates: [], color: "" })
+        );
       } else {
         dispatch(
           addPolygon({
             id: uuidv4(),
+            label: `Map-${polygons.length + 1}`,
             coordinates: currentPolygon,
             color: color,
           })
@@ -106,11 +111,13 @@ const Map = () => {
         <button
           onClick={handleSavePolygon}
           disabled={currentPolygon.length === 0}
-          className={`h__10 ${
-            currentPolygon.length === 0 ? "btn__disabled" : "btn__success"
+          className={`h__10 w__20 ${
+            currentPolygon.length === 0
+              ? "btn__disabled cursor__not__allowed"
+              : "btn__primary"
           }`}
         >
-          Save Polygon
+          {selectedPolygon?.id ? "Update" : "Save"}
         </button>
         {polygonArea !== null && (
           <div className="mt__2">

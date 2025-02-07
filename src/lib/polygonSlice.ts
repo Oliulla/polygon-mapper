@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Polygon {
   id: string;
+  label: string;
   coordinates: [number, number][];
   color: string;
 }
@@ -30,6 +31,7 @@ const polygonSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
+        label: string;
         color?: string;
         coordinates?: [number, number][];
       }>
