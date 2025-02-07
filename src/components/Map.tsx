@@ -110,7 +110,7 @@ const Map = () => {
   return (
     <div className="w__full">
       <ExportAndImport />
-      <MapContainer style={{ height: "60vh", width: "100%" }}>
+      <MapContainer className="map__container">
         <MapView />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapClickHandler

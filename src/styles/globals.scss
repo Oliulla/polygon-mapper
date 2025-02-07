@@ -19,12 +19,17 @@ body {
 }
 
 .sidebar {
-  width: 33%;
+  width: 100%;
   background: var(--secondary-color);
   padding: 10px;
   border-right: 1px solid var(--border-color);
   height: 100vh;
   overflow-y: auto;
+}
+
+.map__container {
+  height: 50vh;
+  width: 100%;
 }
 
 // Search Input
@@ -192,6 +197,14 @@ body {
 }
 
 @media (min-width: 768px) {
+  .sidebar {
+    width: 450px;
+  }
+
+  .map__container {
+    height: 60vh;
+  }
+
   .visible__xs__hidden__lg {
     display: none;
   }
