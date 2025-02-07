@@ -1,22 +1,22 @@
 import * as turf from "@turf/turf";
+import booleanOverlap from "@turf/boolean-overlap";
 
 export const isPolygonValid = (
   newPolygonCoords: [number, number][],
   existingPolygons: { coordinates: [number, number][] }[]
 ): boolean => {
   const closedPolygon = [...newPolygonCoords, newPolygonCoords[0]];
-  const newTrufPolygon = turf.polygon([closedPolygon]);
-  
-    return !existingPolygons.some((existingPolygon) => {
+  const newTurfPolygon = turf.polygon([closedPolygon]);
+
+  return !existingPolygons.some((existingPolygon) => {
     const closedCoordsExistingPolygon = [
       ...existingPolygon.coordinates,
       existingPolygon.coordinates[0],
     ];
 
     const existingTurfPolygon = turf.polygon([closedCoordsExistingPolygon]);
-    return (
-        turf.booleanOverlap(existingTurfPolygon, newTrufPolygon)
-    );
+
+    return booleanOverlap(existingTurfPolygon, newTurfPolygon);
   });
 };
 
