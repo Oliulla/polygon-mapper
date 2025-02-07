@@ -42,7 +42,7 @@ const Map = () => {
   useEffect(() => {
     if (selectedPolygon) {
       setCurrentPolygon(selectedPolygon.coordinates);
-      setColor(selectedPolygon?.color);
+      setColor(selectedPolygon.color);
     }
   }, [selectedPolygon]);
 
@@ -57,50 +57,46 @@ const Map = () => {
   }, [currentPolygon]);
 
   const handleSavePolygon = () => {
-    if (currentPolygon.length > 0) {
-      let removeSelectedPol = polygons;
-      if (selectedPolygon?.id) {
-        removeSelectedPol = polygons?.filter(
-          (pol) => pol.id !== selectedPolygon?.id
-        );
-      }
-
-      if (currentPolygon.length < 4) {
-        alert("Error: A polygon must have at least 4 points!");
-        return;
-      }
-      // console.log(isPolygonValid(currentPolygon, polygons));
-      if (!isPolygonValid(currentPolygon, removeSelectedPol)) {
-        alert("Error: The new polygon overlaps with an existing polygon!");
-        return;
-      }
-
-      if (selectedPolygon?.id) {
-        dispatch(
-          updatePolygon({
-            id: selectedPolygon.id,
-            label: selectedPolygon.label,
-            coordinates: currentPolygon,
-            color: color,
-          })
-        );
-        dispatch(
-          setSelectedPolygon({ id: "", label: "", coordinates: [], color: "" })
-        );
-      } else {
-        dispatch(
-          addPolygon({
-            id: uuidv4(),
-            label: `Map-${polygons.length + 1}`,
-            coordinates: currentPolygon,
-            color: color,
-          })
-        );
-      }
-      setCurrentPolygon([]);
-      setPolygonArea(null);
-      setPolygonCenter(null);
+    if (currentPolygon.length < 4) {
+      alert("Error: A polygon must have at least 4 points!");
+      return;
     }
+
+    const filteredPolygons = polygons.filter(
+      (polygon) => polygon.id !== selectedPolygon?.id
+    );
+
+    if (!isPolygonValid(currentPolygon, filteredPolygons)) {
+      alert("Error: The new polygon overlaps with an existing polygon!");
+      return;
+    }
+
+    if (selectedPolygon?.id) {
+      dispatch(
+        updatePolygon({
+          id: selectedPolygon.id,
+          label: selectedPolygon.label,
+          coordinates: currentPolygon,
+          color: color,
+        })
+      );
+      dispatch(
+        setSelectedPolygon({ id: "", label: "", coordinates: [], color: "" })
+      );
+    } else {
+      dispatch(
+        addPolygon({
+          id: uuidv4(),
+          label: `Map-${polygons.length + 1}`,
+          coordinates: currentPolygon,
+          color: color,
+        })
+      );
+    }
+
+    setCurrentPolygon([]);
+    setPolygonArea(null);
+    setPolygonCenter(null);
   };
 
   const handleColorChange = (newColor: string) => {
@@ -116,14 +112,15 @@ const Map = () => {
         <MapClickHandler
           currentPolygon={currentPolygon}
           setCurrentPolygon={setCurrentPolygon}
-          dispatch={dispatch}
         />
         {currentPolygon.length > 0 && (
           <Polygon positions={currentPolygon} pathOptions={{ color: color }} />
         )}
         {polygonCenter && polygonArea !== null && (
           <Marker position={polygonCenter}>
-            <Tooltip>{polygonArea.toFixed(2)} m^2</Tooltip>
+            <Tooltip>
+              {polygonArea.toFixed(2)} m<sup>2</sup>
+            </Tooltip>
           </Marker>
         )}
       </MapContainer>
@@ -131,9 +128,8 @@ const Map = () => {
         <div className="mt__1 ml__1 visible__xs__hidden__lg">
           <p>
             <span className="font__semibold">Polygon Area:</span>{" "}
-            {polygonArea.toFixed(2)} m^2 |{" "}
-            {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}
-            {(polygonArea * 0.000247105).toFixed(2)} acres
+            {polygonArea.toFixed(2)} m² | {(polygonArea / 1_000_000).toFixed(4)}{" "}
+            km² | {(polygonArea * 0.000247105).toFixed(2)} acres
           </p>
         </div>
       )}
@@ -153,8 +149,8 @@ const Map = () => {
           <div className="mt__2 hidden__xs__visible__lg">
             <p>
               <span className="font__semibold">Polygon Area:</span>{" "}
-              {polygonArea.toFixed(2)} m^2 |{" "}
-              {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}
+              {polygonArea.toFixed(2)} m<sup>2</sup> |{" "}
+              {(polygonArea / 1_000_000).toFixed(4)} km<sup>2</sup> |{" "}
               {(polygonArea * 0.000247105).toFixed(2)} acres
             </p>
           </div>
@@ -166,12 +162,3 @@ const Map = () => {
 };
 
 export default Map;
-
-// const MapView = () => {
-//   const map = useMap();
-//   useEffect(() => {
-//     map.setView([51.505, -0.09], 13);
-//   }, [map]);
-
-//   return null;
-// };
