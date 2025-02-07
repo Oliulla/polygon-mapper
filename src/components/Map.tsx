@@ -127,7 +127,16 @@ const Map = () => {
           </Marker>
         )}
       </MapContainer>
-      <div className="w__full flex justify__between mt-4">
+      {polygonArea !== null && (
+        <div className="mt__1 ml__1 visible__xs__hidden__lg">
+          <p>
+            Polygon Area: {polygonArea.toFixed(2)} m^2 |{" "}
+            {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}
+            {(polygonArea * 0.000247105).toFixed(2)} acres
+          </p>
+        </div>
+      )}
+      <div className="w__full gap__x__5 flex justify__between mt-4">
         <button
           onClick={handleSavePolygon}
           disabled={currentPolygon.length === 0}
@@ -140,7 +149,7 @@ const Map = () => {
           {selectedPolygon?.id ? "Update" : "Save"}
         </button>
         {polygonArea !== null && (
-          <div className="mt__2">
+          <div className="mt__2 hidden__xs__visible__lg">
             <p>
               Polygon Area: {polygonArea.toFixed(2)} m^2 |{" "}
               {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}

@@ -1,6 +1,6 @@
 :root {
   --primary-color: #ff0000;
-  --secondary-color: #f8f8f8;
+  --secondary-color: #332d2d;
   --success-color: #1106aa;
   --border-color: #ddd;
   --text-color: #000;
@@ -19,7 +19,7 @@ body {
 }
 
 .sidebar {
-  width: 450px;
+  width: 33%;
   background: var(--secondary-color);
   padding: 10px;
   border-right: 1px solid var(--border-color);
@@ -60,7 +60,7 @@ body {
 
 .btn__secondary {
   background: var(--secondary-color);
-  color: var(--text-color);
+  color: var(--white-color);
   border: none;
   padding: 5px 4px;
   cursor: pointer;
@@ -89,6 +89,10 @@ body {
 }
 
 // Utility Classes
+.my__3 {
+  margin: 12px 0;
+}
+
 .ml__1 {
   margin-left: 4px;
 }
@@ -109,8 +113,20 @@ body {
   width: 100%;
 }
 
+.hidden {
+  display: none;
+}
+
 .flex {
   display: flex;
+}
+
+.flex__col {
+  flex-direction: column;
+}
+
+.justify__center {
+  justify-content: center;
 }
 
 .justify__between {
@@ -121,8 +137,20 @@ body {
   align-items: center;
 }
 
+.align__self {
+  align-self: flex-end;
+}
+
 .gap__x_1 {
-  gap: 4px;
+  gap: 0 4px;
+}
+
+.gap__x_2 {
+  gap: 0 8px;
+}
+
+.gap__x__5 {
+  gap: 0 20px
 }
 
 .h__8 {
@@ -141,6 +169,34 @@ body {
   font-size: 24px;
 }
 
+.text__white {
+  color: var(--white-color);
+}
+
 .cursor__not__allowed {
   cursor: not-allowed;
+}
+
+.cursor__pointer {
+  cursor: pointer;
+}
+
+
+/* xs (Phone) */
+.visible__xs__hidden__lg {
+  display: block;
+}
+
+.hidden__xs__visible__lg {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .visible__xs__hidden__lg {
+    display: none;
+  }
+
+  .hidden__xs__visible__lg{
+    display: block;
+  }
 }

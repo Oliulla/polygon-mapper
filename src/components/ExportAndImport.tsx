@@ -35,16 +35,20 @@ const ExportAndImport = () => {
   };
 
   return (
-    <div className="flex gap_x_1">
+    <div className="w__full flex gap__x_2 align__self my__3 ml__1">
       <button onClick={handleExport} className="btn__primary">
         Export JSON
       </button>
 
+      <label htmlFor="file-upload" className="btn__secondary cursor__pointer">
+        Import JSON
+      </label>
       <input
+        id="file-upload"
         type="file"
         accept="application/json"
         onChange={handleImport}
-        className="btn__secondary"
+        className="hidden"
       />
     </div>
   );
