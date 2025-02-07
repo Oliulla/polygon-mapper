@@ -25,24 +25,37 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2 className="text__xl font__semibold">Saved Polygons</h2>
+      <h2 className="md__text__xl text__white font__semibold">
+        Saved Polygons
+      </h2>
 
-      <div className="mr__5">
+      <div className="mr__5 mt__2">
         <input
           type="text"
-          placeholder="Search polygons..."
+          placeholder="Search by label or id. Ex: map-1, a6ad"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search__input w__full mt__1"
         />
       </div>
-      {filteredPolygons.length === 0 ? <p>No polygons found.</p> : null}
+      {filteredPolygons.length === 0 ? (
+        <p className="text__white mt__1">No polygons found.</p>
+      ) : null}
 
       <div className="polygon__list">
         {filteredPolygons.map((polygon, idx) => (
           <div key={polygon.id} className="polygon__item">
-            <p className="font__semibold">{polygon.label}</p>
-            <div className="flex gap__x_1">
+            <div className="text__white">
+              <p>
+                <span className="font__semibold">Label:</span>{" "}
+                <span>{polygon.label}</span>
+              </p>
+              <p>
+                <span className="font__semibold">Id:</span>{" "}
+                <span>{polygon.id.slice(0, 4)}</span>
+              </p>
+            </div>
+            <div className="flex gap__x_1 btn__area">
               <button
                 disabled={selectedPolygon?.id === polygon.id}
                 onClick={() => dispatch(removePolygon(polygon.id))}

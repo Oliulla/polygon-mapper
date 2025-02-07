@@ -108,9 +108,9 @@ const Map = () => {
   };
 
   return (
-    <div className="w__full">
+    <div className="map__section">
       <ExportAndImport />
-      <MapContainer style={{ height: "60vh", width: "100%" }}>
+      <MapContainer className="map__container">
         <MapView />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <MapClickHandler
@@ -127,11 +127,21 @@ const Map = () => {
           </Marker>
         )}
       </MapContainer>
-      <div className="w__full flex justify__between mt-4">
+      {polygonArea !== null && (
+        <div className="mt__1 ml__1 visible__xs__hidden__lg">
+          <p>
+            <span className="font__semibold">Polygon Area:</span>{" "}
+            {polygonArea.toFixed(2)} m^2 |{" "}
+            {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}
+            {(polygonArea * 0.000247105).toFixed(2)} acres
+          </p>
+        </div>
+      )}
+      <div className="w__full flex sm__flex__col gap__x__5 justify__between mt__2">
         <button
           onClick={handleSavePolygon}
           disabled={currentPolygon.length === 0}
-          className={`h__8 w__20 ${
+          className={`save__btn ${
             currentPolygon.length === 0
               ? "btn__disabled cursor__not__allowed"
               : "btn__primary"
@@ -140,9 +150,10 @@ const Map = () => {
           {selectedPolygon?.id ? "Update" : "Save"}
         </button>
         {polygonArea !== null && (
-          <div className="mt__2">
+          <div className="mt__2 hidden__xs__visible__lg">
             <p>
-              Polygon Area: {polygonArea.toFixed(2)} m^2 |{" "}
+              <span className="font__semibold">Polygon Area:</span>{" "}
+              {polygonArea.toFixed(2)} m^2 |{" "}
               {(polygonArea / 1_000_000).toFixed(4)} km^2 |{" "}
               {(polygonArea * 0.000247105).toFixed(2)} acres
             </p>
