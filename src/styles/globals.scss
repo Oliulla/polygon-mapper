@@ -58,6 +58,14 @@ body {
   cursor: pointer;
 }
 
+.btn__secondary {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 5px 4px;
+  cursor: pointer;
+}
+
 .btn__danger {
   background: var(--primary-color);
   color: var(--white-color);

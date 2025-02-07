@@ -47,9 +47,19 @@ const polygonSlice = createSlice({
     setSelectedPolygon: (state, action: PayloadAction<Polygon | null>) => {
       state.selectedPolygon = action.payload;
     },
+
+    // Set polygons by import JSON file
+    setPolygons: (state, action) => {
+      state.polygons = action.payload;
+    },
   },
 });
 
-export const { addPolygon, removePolygon, updatePolygon, setSelectedPolygon } =
-  polygonSlice.actions;
+export const {
+  addPolygon,
+  removePolygon,
+  updatePolygon,
+  setSelectedPolygon,
+  setPolygons,
+} = polygonSlice.actions;
 export default polygonSlice.reducer;

@@ -24,6 +24,7 @@ import { calculateArea } from "@/utils/calculaterAreaWithTurf";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { isPolygonValid } from "@/utils/validatePolygon";
+import ExportAndImport from "./ExportAndImport";
 
 const Map = () => {
   const [color, setColor] = useState<string>("#ff0000");
@@ -108,6 +109,7 @@ const Map = () => {
 
   return (
     <div className="w__full">
+      <ExportAndImport />
       <MapContainer style={{ height: "60vh", width: "100%" }}>
         <MapView />
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
